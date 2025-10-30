@@ -31,5 +31,10 @@ class LoadStreamlitUI:
                     st.warning("⚠️ Please provide your Groq API key to proceed!!")
                     
             self.user_controls['selected_usecase'] = st.selectbox("Select Use Case",usecase_options)
+            
+            if self.user_controls['selected_usecase'] == 'Chatbot with tools':
+                self.user_controls["TAVILY_API_KEY"] = st.session_state["TAVILY_API_KEY"] = st.text_input("Tavily API Key",type="password")
+                if self.user_controls["TAVILY_API_KEY"] == '':
+                    st.warning("⚠️ Please provide your Tavily API key to proceed!!")
         return self.user_controls
             

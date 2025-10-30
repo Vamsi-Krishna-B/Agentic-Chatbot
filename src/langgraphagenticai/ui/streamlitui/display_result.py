@@ -42,3 +42,32 @@ class DisplayResult:
 
                 with st.chat_message("assistant"):
                     st.write(response)
+            elif usecase == "Chatbot with tools":
+            # ✅ Prepare initial state and invoke graph
+                initial_state = {"messages": [user_message]}
+                res = graph.invoke(initial_state, reasoning_format="hidden")
+    
+                for message in res["messages"]:
+                    # Human Message
+                    if isinstance(message, HumanMessage):
+                        role = "user"
+                        content = message.content
+                    # Tool Message
+                    elif isinstance(message, ToolMessage):
+                        role = "assistant"
+                        content = f"🧰 **Tool Call Start**\n\n{message.content}\n\n🧰 **Tool Call End**"
+                    # AI Message
+                    elif isinstance(message, AIMessage) and message.content:
+                        role = "assistant"
+                        content = message.content
+                    else:
+                        continue
+                    
+                    # ✅ Display message
+                    with st.chat_message(role):
+                        st.write(content)
+    
+                    # ✅ Append to session history
+                    st.session_state["messages"].append({"role": role, "content": content})
+
+               
