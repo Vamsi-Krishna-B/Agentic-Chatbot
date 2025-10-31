@@ -10,7 +10,7 @@ class AiNewsNode:
     def __init__(self,model):
         self.tavily = TavilyClient()
         self.llm = model
-        self.state
+        self.state = {}
     def fetch_news(self,state:dict)->dict:
         """
         Fetch AI News based on the specified frequency 
