@@ -70,4 +70,46 @@ class DisplayResult:
                     # ✅ Append to session history
                     st.session_state["messages"].append({"role": role, "content": content})
 
-               
+            elif usecase == "AI News":
+                    frequency = self.user_message
+                
+                    # ✅ Display user message and add to chat history
+                    st.session_state["messages"].append({"role": "user", "content": frequency})
+                    with st.chat_message("user"):
+                        st.write(frequency)
+                
+                    # ✅ Processing spinner
+                    with st.spinner("Fetching and Summarizing AI News..."):
+                        try:
+                            # Invoke your AI news graph
+                            result = graph.invoke({"messages": frequency})
+                
+                            # Construct expected markdown path
+                            AI_NEWS_PATH = f"./AI_News/ai_news_{frequency.lower()}.md"
+                
+                            # ✅ Read and display markdown content
+                            with open(AI_NEWS_PATH, "r", encoding="utf-8") as f:
+                                markdown_content = f.read()
+                
+                            with st.chat_message("assistant"):
+                                st.markdown(markdown_content, unsafe_allow_html=True)
+                
+                            # ✅ Add assistant message to session history
+                            st.session_state["messages"].append({
+                                "role": "assistant",
+                                "content": markdown_content
+                            })
+                
+                        except FileNotFoundError:
+                            error_msg = f"❌ The file `{AI_NEWS_PATH}` was not found. Please ensure the news has been fetched and summarized correctly."
+                            with st.chat_message("assistant"):
+                                st.error(error_msg)
+                            st.session_state["messages"].append({"role": "assistant", "content": error_msg})
+                
+                        except Exception as e:
+                            error_msg = f"⚠️ An error occurred: {str(e)}"
+                            with st.chat_message("assistant"):
+                                st.error(error_msg)
+                            st.session_state["messages"].append({"role": "assistant", "content": error_msg})
+
+                   

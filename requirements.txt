@@ -14,3 +14,4 @@ faiss-cpu
 chromadb
 streamlit
 langchain-huggingface
+tavily
