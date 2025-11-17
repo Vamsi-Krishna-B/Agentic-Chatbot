@@ -11,3 +11,4 @@ langchain-tavily
 streamlit
 langchain-huggingface
 tavily
+pytest
