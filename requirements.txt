@@ -3,15 +3,11 @@ langgraph
 langchain-core
 langchain-community
 python-dotenv
-langchain-openai
-langchain-ollama
 langchain-groq
 arxiv
 wikipedia
 bs4
 langchain-tavily
-faiss-cpu
-chromadb
 streamlit
 langchain-huggingface
 tavily
